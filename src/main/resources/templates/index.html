@@ -2,9 +2,86 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 th:text="${msg}">Hello!</h1>
+	<script type="text/javascript" src="ajax.js"></script>
+
+	<!-- <h3>ユーザー情報を入力してください。</h3>
+	<form th:action="@{/add}" method="POST" th:object="${accountForm}">
+		<table>
+			<tr>
+				<th>ユーザー名</th>
+				<th>パスワード</th>
+			</tr>
+			<tr>
+				<td><input type="text" th:field="*{userName}"></td>
+				<td><input type="text" th:field="*{password}"></td>
+				<td><input type="submit" value="追加"></td>
+			</tr>
+		</table>
+	</form>
+
+	<h3>結果</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>ユーザー名</th>
+			<th>パスワード</th>
+		</tr>
+		<tr th:each="account : ${accounts}">
+			<td th:text="${account.id}"></td>
+			<td th:text="${account.userName}"></td>
+			<td th:text="${account.password}"></td>
+			<td>
+				<form th:action="@{/delete}" method="POST">
+					<input type="hidden" name="id" th:value="${account.id}">
+					<input type="submit" value="削除">
+				</form>
+			</td>
+		</tr>
+	</table> -->
+
+	<h3>ユーザー情報を入力してください。</h3>
+	<table>
+		<tr>
+			<th>ユーザー名</th>
+			<th>パスワード</th>
+		</tr>
+		<tr>
+			<td><input id="add_userName" type="text"></td>
+			<td><input id="add_password" type="text"></td>
+			<td><input id="addBtn" type="button" value="追加"></td>
+		</tr>
+	</table>
+
+	<h3>結果</h3>
+	<table id="result_data">
+		<tr>
+			<th>ID</th>
+			<th>ユーザー名</th>
+			<th>パスワード</th>
+		</tr>
+		<!-- <tr>
+			<td th:text="${account.id}"></td>
+			<td th:text="${account.userName}"></td>
+			<td th:text="${account.password}"></td>
+			<td>
+				<form th:action="@{/delete}" method="POST">
+					<input id="delete_id" type="hidden" name="id" th:value="${account.id}">
+					<input id="deleteBtn" type="button" value="削除">
+				</form>
+			</td>
+		</tr> -->
+	</table>
+
+	<h3>Ajaxテスト</h3>
+	<div>
+		<input type="button" value="Ajaxテスト" id="ajax_btn"><br />
+		outputData：<span id="output_data"></span>
+	</div>
+
 </body>
 </html>

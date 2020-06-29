@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+table {
+    border: solid 1px;
+    border-collapse: collapse;
+}
+
+table th {/*table内のthに対して*/
+    padding: 10px;/*上下左右10pxずつ*/
+    background-color: aquamarine;
+    border: solid 1px;
+  }
+
+table td {/*table内のtdに対して*/
+padding: 3px 10px;/*上下3pxで左右10px*/
+    border: solid 1px;
+}
