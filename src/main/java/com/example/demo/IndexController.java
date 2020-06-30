@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @Controller
 public class IndexController {
 
@@ -65,31 +62,19 @@ public class IndexController {
 		entity.setUserName(form.getUserName());
 		entity.setPassword(form.getPassword());
 
-		userRepository.save(entity);
+		var result = userRepository.save(entity);
 
-		return json;
+		String resultJson = JsonUtil.convert(result);
+
+		return resultJson;
 	}
 
 	@PostMapping("/deleteAjax")
 	@ResponseBody
 	public String deleteAjax(@RequestBody String json) {
 
-        ObjectMapper mapper = new ObjectMapper();
-        try{
-             String test = mapper.writeValueAsString(json);
-             System.out.println(test);
-             //return json;
-        }catch(JsonProcessingException e){
-             return null;
-        }
-
-		var id = JsonUtil.parse(String[].class, json);
-//
-//		var entity = new UserEntity();
-//		entity.setUserName(form.getUserName());
-//		entity.setPassword(form.getPassword());
-//
-//		userRepository.save(entity);
+		var form = JsonUtil.parse(AccountForm.class, json);
+		userRepository.deleteById(form.getId());
 
 		return json;
 	}

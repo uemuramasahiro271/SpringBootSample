@@ -7,13 +7,17 @@ function loadSuccess(dataArray) {
 
     for (let index = 0; index < dataArray.length; index++) {
         const data = dataArray[index];
-        var $tr = $("<tr></tr>")
-        $tr.append(createTdTag("id", data.id, data.id));
-        $tr.append(createTdTag("userName", data.id, data.userName));
-        $tr.append(createTdTag("password", data.id, data.password));
-        $tr.append(createDeleteBtn("deleteBtn", data.id));
-        $("#result_data").append($tr);
+        addRecord(data.id, data.userName, data.password);
     }
+}
+
+function addRecord(id, userName, password) {
+    var $tr = $("<tr></tr>")
+    $tr.append(createTdTag("id", id, id));
+    $tr.append(createTdTag("userName", id, userName));
+    $tr.append(createTdTag("password", id, password));
+    $tr.append(createDeleteBtn("deleteBtn", id));
+    $("#result_data").append($tr);
 }
 
 function createTdTag(name, id, text) {
@@ -32,12 +36,11 @@ function createDeleteBtn(name, id) {
     $btn.click(function() {
         var $tr = $(this).parents("tr");
         var deleteId = $tr.children("#id" + id).text();
-        var data = {id: "1"};
+        var data = {id:deleteId};
         let json = JSON.stringify(data);
-        //console.log(data);
         console.log(json);
         ajaxPost("/deleteAjax", json, function() {
-            $("#result_data").remove($tr);
+            $tr.remove();
          });
     });
 
@@ -65,12 +68,21 @@ function successTest(data) {
 
 $(function() {
     $("#addBtn").click(function() {
-        ajaxPost("/addAjax", function(data) { successTest(data); });
+        var userName = $("#add_userName").val();
+        var password = $("#add_password").val();
+
+        $("#add_userName").val("");
+        $("#add_password").val("");
+
+        var data = {userName:userName, password:password};
+        let json = JSON.stringify(data);
+
+        ajaxPost("/addAjax", json, function(data) { addSuccess(data); });
     });
 });
 
 function addSuccess(data) {
-    $("#result_data").append("");
+    addRecord(data.id, data.userName, data.password);
 }
 
 function error(XMLHttpRequest, textStatus, errorThrown) {
@@ -93,8 +105,9 @@ function ajaxPost(url, data, successFuction) {
     $.ajax({
         type     : "POST",
         url      : url,
+        contentType: 'application/json',
         dataType : "json",
-        data     : {parameter1 : 1, parameter2 : 2 },
+        data     : data,
         success  : successFuction,
         error    : function(XMLHttpRequest, textStatus, errorThrown) { error(XMLHttpRequest, textStatus, errorThrown); }
     });
