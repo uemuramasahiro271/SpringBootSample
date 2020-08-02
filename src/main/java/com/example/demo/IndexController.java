@@ -31,6 +31,23 @@ public class IndexController {
 		return mv;
 	}
 
+	@GetMapping("/login")
+	public ModelAndView login(ModelAndView mv) {
+
+		mv.setViewName("loginForm");
+
+		return mv;
+	}
+
+	@PostMapping
+	@GetMapping("/accountRegister")
+	public ModelAndView accountRegister(ModelAndView mv) {
+
+		mv.setViewName("accountRegisterForm");
+
+		return mv;
+	}
+
 	@PostMapping("/add")
 	public ModelAndView add(ModelAndView mv, @ModelAttribute AccountForm form) {
 
